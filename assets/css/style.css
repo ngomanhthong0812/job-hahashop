@@ -1,0 +1,95 @@
+/* styles.css */
+
+
+/* Đảm bảo chiều cao của banner luôn cố định */
+.carousel-item img {
+    max-height: 450px; /* Giới hạn chiều cao của banner */
+    object-fit: cover; /* Đảm bảo ảnh không bị méo */
+}
+
+.carousel-indicators li {
+    background-color: #ffffff; /* Màu của dấu chấm điều hướng */
+}
+
+
+/* Cố định kích thước thẻ sản phẩm */
+.card {
+    width: 250px;
+    height: 400px; /* Cố định chiều cao thẻ */
+    margin-bottom: 15px; 
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: #fff;
+    overflow: hidden; /* Đảm bảo không bị thừa nội dung */
+}
+
+/* Giữ cho tiêu đề sản phẩm */
+.card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-overflow: ellipsis;
+    white-space: normal; /* Cho phép tiêu đề xuống dòng */
+    overflow: visible;
+}
+
+/* Đảm bảo hình ảnh có kích thước đồng đều */
+.card-img-top {
+    height: 205px;
+    object-fit: cover;
+    width: 100%; /* Đảm bảo ảnh chiếm đủ chiều rộng của thẻ */
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+/* Nội dung chính trong thẻ */
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    flex-grow: 1;
+}
+
+/* Thông tin giá */
+.card-text {
+    font-size: 1rem;
+    color: #ff7f00;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/* Cải thiện thiết kế nút bấm */
+.btn {
+    margin-top: auto;
+    background-color: #ffa14e;
+    border-radius: 20px;
+    padding: 10px 20px;
+}
+
+/* Hiệu ứng hover */
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Cải thiện hiệu ứng hover cho nút */
+.btn:hover {
+    background-color: #ff7f00; /* Màu nền mới */
+    color: #fff; /* Màu chữ khi hover */
+    border-color: #ff5722; /* Thêm màu biên cho nút khi hover */
+    transform: scale(1.05); /* Tăng kích thước nút một chút */
+}
+
+
+/* Đảm bảo các thẻ đều nằm trong một hàng */
+.col-md-3, .col-sm-6, .col-lg-3 {
+    display: flex;
+    justify-content: center;
+    padding: 0 10px;
+}
+
+

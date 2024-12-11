@@ -1,0 +1,145 @@
+.navbar {
+    background-color: #ffa14e;
+    padding-top: 0;
+    padding-bottom: 1;
+}
+
+/* Thay đổi màu văn bản trên header */
+.navbar-nav .nav-link {
+    color: white !important;
+    font-size: 1rem;
+    /* Tăng kích thước chữ */
+    font-weight: bold;
+    /* In đậm */
+    display: flex;
+    align-items: center;
+}
+
+/* Thêm khoảng cách giữa icon và chữ */
+.navbar .navbar-nav .nav-link i {
+    font-size: 1.3 rem;
+    margin-right: 8px;
+}
+
+/* Chữ HaHaShop ở góc trái sử dụng font Pacifico */
+.navbar-brand {
+    font-size: 2rem;
+    /* Kích thước chữ lớn */
+    font-family: 'Pacifico', cursive;
+    /* Sử dụng font Pacifico */
+    color: white !important;
+    text-transform: none;
+}
+
+/* Hiệu ứng hover khi di chuột qua logo */
+.navbar-brand:hover {
+    color: white !important;
+}
+
+/* Hiệu ứng hover khi di chuột qua các mục */
+.navbar-nav .nav-link:hover {
+    color: black !important;
+    /* Màu đen khi hover */
+}
+
+/* Cải thiện bố cục và căn chỉnh các mục bên phải */
+.navbar-nav {
+    margin-left: auto;
+    /* Đẩy các mục sang bên phải */
+}
+
+/* Cải thiện khoảng cách giữa các mục */
+.nav-item {
+    margin-left: 20px;
+}
+
+/* Thiết kế container category-menu */
+.category-menu {
+    margin-top: 25px;
+    margin-bottom: 20px;
+}
+
+.category-item {
+    margin: 0;
+    /* Khoảng cách bên trong các ô */
+    border-radius: 5px;
+    width: 200px;
+    /* Kích thước chiều rộng mỗi ô */
+    border: 1px solid white;
+    /* Viền xung quanh mỗi item */
+    background-color: #fcefe3;
+    /* Màu nền của ô */
+    text-align: center;
+    /* Canh giữa nội dung trong ô */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.category-item:hover {
+    background-color: #ffa14e;
+    /* Màu nền khi hover */
+    color: white;
+    /* Màu chữ khi hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Hiệu ứng bóng khi hover */
+}
+
+.category-item.active {
+    background-color: #ffa14e;
+    /* Màu nền khi hover */
+    color: white;
+    /* Màu chữ khi hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Hiệu ứng bóng khi hover */
+}
+
+.category-item .nav-link {
+    color: #333;
+    /* Màu chữ mặc định */
+    font-weight: bold;
+    /* Làm chữ đậm */
+    text-decoration: none;
+    /* Bỏ gạch chân */
+    font-size: 1.3rem;
+}
+
+.category-item .nav-link:hover {
+    color: white;
+    /* Màu chữ khi hover */
+}
+
+
+/* Kích thước và kiểu của thanh tìm kiếm */
+.search-box {
+
+    width: 40%;
+    /* Bạn có thể điều chỉnh giá trị này để kéo dài thanh tìm kiếm */
+    margin: 0 auto;
+    /* Căn giữa phần thanh tìm kiếm */
+}
+
+.input-group-text {
+    background-color: #fff;
+    border: 1.5px solid #ffa14e;
+    border-left: none;
+}
+
+.form-control {
+    border: 1.5px solid #ffa14e;
+    border-right: none;
+    /* Để không bị đè lên icon kính lúp */
+}
+
+.search-icon {
+    font-size: 1.5rem;
+    color: #ffa14e;
+}
+
+/* Căn giữa thanh tìm kiếm trong header */
+.search-container {
+    display: flex;
+    min-width: 400px;
+}
+
+.search-container input {
+    width: 100%;
+}
