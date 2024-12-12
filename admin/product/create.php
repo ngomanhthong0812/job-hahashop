@@ -16,19 +16,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         "price" => $_POST['price'],
     );
 
+    // Kiểm tra xem tệp ảnh có được tải lên không
+    if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+        $imageTmpName = $_FILES['image']['tmp_name'];
+        $imageName = $_FILES['image']['name'];
+        $imageDest = "../../assets/images/products/" . $imageName;  // Đường dẫn nơi lưu ảnh
+
+        // Di chuyển tệp ảnh từ tạm thời đến thư mục uploads
+        if (move_uploaded_file($imageTmpName, $imageDest)) {
+            // Lưu tên ảnh vào cơ sở dữ liệu
+            $imagePath = $imageName;
+        } else {
+            echo "Lỗi khi tải ảnh lên.";
+            exit();
+        }
+    } else {
+        // Nếu không có ảnh, sử dụng ảnh mặc định
+        $imagePath = 'nike_air_max_270_1.png';
+    }
+
     // Câu lệnh SQL để chèn dữ liệu vào cơ sở dữ liệu
-    $sql = "INSERT INTO product (name, description,category_id,price) VALUES (?, ?, ?, ?)";
+    $sql = "INSERT INTO product (name, image, description, category_id, price) VALUES (?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
 
     // Kiểm tra xem câu lệnh prepare có thành công không
     if ($stmt) {
         // Gắn các tham số vào câu lệnh
         $stmt->bind_param(
-            "ssis",
+            "sssis",
             $createProduct['name'],
+            $imagePath,  // Lưu tên ảnh vào cơ sở dữ liệu
             $createProduct['description'],
             $createProduct['category_id'],
-            $createProduct['price'],
+            $createProduct['price']
         );
 
         // Thực thi câu lệnh
@@ -79,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             DataTable Example
                         </div>
                         <div class="card-body">
-                            <form action="create.php" method="post">
+                            <form action="create.php" method="post" enctype="multipart/form-data">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Name</label>
                                     <input type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="">
@@ -94,9 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         <?php
                                         // Duyệt qua các category và hiển thị trong dropdown
                                         while ($category = $categories->fetch_assoc()) {
-                                            // Kiểm tra xem category này có phải là category hiện tại của sản phẩm không
-                                            $selected = ($product['category_id'] == $category['id']) ? 'selected' : '';
-                                            echo "<option value='" . $category['id'] . "' $selected>" . $category['name'] . "</option>";
+                                            echo "<option value='" . $category['id'] . "'>" . $category['name'] . "</option>";
                                         }
                                         ?>
                                     </select>
@@ -104,6 +122,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <div class="form-group">
                                     <label for="exampleInputPrice">Price</label>
                                     <input type="text" name="price" class="form-control" id="exampleInputPrice" aria-describedby="emailHelp" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="imageUpload">Image</label>
+                                    <input type="file" name="image" class="form-control" id="imageUpload">
                                 </div>
                                 <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Submit</button>
                             </form>

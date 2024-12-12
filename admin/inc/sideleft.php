@@ -1,6 +1,3 @@
-<?php
-define('BASE_URL', 'http://localhost/hahashop/');
-?>
 <div id="layoutSidenav_nav">
     <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
         <div class="sb-sidenav-menu">
@@ -13,46 +10,55 @@ define('BASE_URL', 'http://localhost/hahashop/');
                 <div class="sb-sidenav-menu-heading">Interface</div>
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseCategory" aria-expanded="false" aria-controls="collapseLayouts">
                     <div class="sb-nav-link-icon"><i class='bx bx-scatter-chart'></i></div>
-                    Category
+                    Loại sản phẩm
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
                 <div class="collapse" id="collapseCategory" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="<?php echo BASE_URL . 'admin/category/index.php'; ?>">All</a>
-                        <a class="nav-link" href="<?php echo BASE_URL . 'admin/category/create.php'; ?>">Add</a>
+                        <a class="nav-link" href="<?php echo BASE_URL . 'admin/category/index.php'; ?>">Tất cả</a>
+                        <a class="nav-link" href="<?php echo BASE_URL . 'admin/category/create.php'; ?>">Thêm</a>
                     </nav>
                 </div>
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseProduct" aria-expanded="false" aria-controls="collapseLayouts">
                     <div class="sb-nav-link-icon"><i class='bx bx-category'></i></div>
-                    Products
+                    Sản phẩm
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
                 <div class="collapse" id="collapseProduct" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="<?php echo BASE_URL . 'admin/product/index.php'; ?>">All</a>
-                        <a class="nav-link" href="<?php echo BASE_URL . 'admin/product/create.php'; ?>">Add</a>
+                        <a class="nav-link" href="<?php echo BASE_URL . 'admin/product/index.php'; ?>">Tất cả</a>
+                        <a class="nav-link" href="<?php echo BASE_URL . 'admin/product/create.php'; ?>">Thêm</a>
                     </nav>
                 </div>
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseUser" aria-expanded="false" aria-controls="collapseLayouts">
                     <div class="sb-nav-link-icon"><i class='bx bx-user'></i></div>
-                    Users
+                    Người dùng
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
                 <div class="collapse" id="collapseUser" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="<?php echo BASE_URL . 'admin/users'; ?>">All</a>
-                        <a class="nav-link" href="<?php echo BASE_URL . 'admin/users/create.php'; ?>">Add</a>
+                        <a class="nav-link" href="<?php echo BASE_URL . 'admin/user/index.php'; ?>">Tất cả</a>
+                        <a class="nav-link" href="<?php echo BASE_URL . 'admin/user/create.php'; ?>">Thêm</a>
                     </nav>
                 </div>
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseOrder" aria-expanded="false" aria-controls="collapseLayouts">
                     <div class="sb-nav-link-icon"><i class='bx bx-cart'></i></div>
-                    Orders
+                    Đơn hàng
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
                 <div class="collapse" id="collapseOrder" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="<?php echo BASE_URL . 'admin/orders'; ?>">All</a>
-                        <a class="nav-link" href="<?php echo BASE_URL . 'admin/orders/create.php'; ?>">Add</a>
+                        <a class="nav-link" href="<?php echo BASE_URL . 'admin/order/index.php'; ?>">Tất cả</a>
+                    </nav>
+                </div>
+                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseFeedback" aria-expanded="false" aria-controls="collapseLayouts">
+                    <div class="sb-nav-link-icon"><i class='bx bxs-star'></i></div>
+                    Đánh giá
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseFeedback" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link" href="<?php echo BASE_URL . 'admin/feedback/index.php'; ?>">Tất cả</a>
                     </nav>
                 </div>
             </div>

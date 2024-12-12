@@ -3,8 +3,8 @@
 include('../config/init.php');
 
 // Lấy dữ liệu từ cơ sở dữ liệu
-$sql = "SELECT * FROM product";
-$product_list = $conn->query($sql);
+$sql = "SELECT * FROM user";
+$user_list = $conn->query($sql);
 ?>
 
 <!DOCTYPE html>
@@ -39,12 +39,11 @@ $product_list = $conn->query($sql);
                                 <thead>
                                     <tr>
                                         <th>STT</th>
-                                        <th>Ảnh</th>
-                                        <th>Tên</th>
-                                        <th>Mô tả</th>
-                                        <th>Loại</th>
-                                        <th>Giá</th>
+                                        <th>Tên đăng nhập</th>
+                                        <th>Tên người dùng</th>
+                                        <th>Email</th>
                                         <th>Ngày tạo</th>
+                                        <th></th>
                                         <th></th>
                                         <th></th>
                                     </tr>
@@ -52,68 +51,50 @@ $product_list = $conn->query($sql);
                                 <tfoot>
                                     <tr>
                                         <th>STT</th>
-                                        <th>Ảnh</th>
-                                        <th>Tên</th>
-                                        <th>Mô tả</th>
-                                        <th>Loại</th>
-                                        <th>Giá</th>
+                                        <th>Tên đăng nhập</th>
+                                        <th>Tên người dùng</th>
+                                        <th>Email</th>
                                         <th>Ngày tạo</th>
+                                        <th></th>
                                         <th></th>
                                         <th></th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
                                     <?php $index = 0; ?>
-                                    <?php foreach ($product_list as $product) { ?>
+                                    <?php foreach ($user_list as $user) { ?>
                                         <tr>
                                             <td>
                                                 <?php echo ++$index; ?>
                                             </td>
                                             <td>
-                                                <img src="../../assets/images/products/<?php echo $product['image']; ?>"
-                                                    width="60" height="60">
+                                                <?php echo $user['username']; ?>
                                             </td>
                                             <td>
-                                                <?php echo $product['name']; ?>
+                                                <?php echo $user['full_name']; ?>
                                             </td>
                                             <td>
-                                                <?php echo $product['description']; ?>
+                                                <?php echo $user['email']; ?>
                                             </td>
                                             <td>
-                                                <?php
-                                                // Lấy category_id từ sản phẩm
-                                                $category_id = $product['category_id'];
-
-                                                // Truy vấn lấy tên category
-                                                $sql = "SELECT name FROM category WHERE id = ?";
-                                                $stmt = $conn->prepare($sql);
-                                                $stmt->bind_param("i", $category_id);
-                                                $stmt->execute();
-                                                $stmt->bind_result($category_name);
-
-                                                // Hiển thị tên category
-                                                if ($stmt->fetch()) {
-                                                    echo $category_name;
-                                                } else {
-                                                    echo "Không tìm thấy tên category";
-                                                }
-
-                                                $stmt->close();
-                                                ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $product['price']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $product['created_at']; ?>
+                                                <?php echo $user['created_at']; ?>
                                             </td>
                                             <td>
                                                 <a class="btn btn-primary text-nowrap"
-                                                    href="edit.php?product_id=<?php echo $product['id']; ?>">Cập nhật</a>
+                                                    href="edit.php?user_id=<?php echo $user['id']; ?>">Cập nhật</a>
                                             </td>
                                             <td>
                                                 <a class="btn btn-danger text-nowrap"
-                                                    href="delete.php?product_id=<?php echo $product['id']; ?>">Xoá</a>
+                                                    href="delete.php?user_id=<?php echo $user['id']; ?>">Xoá</a>
+                                            </td>
+                                            <td>
+                                                <?php if ($user['status'] == 'active'): ?>
+                                                    <!-- Nếu trạng thái là 'active', hiển thị nút ngừng hoạt động -->
+                                                    <a class="btn btn-danger text-nowrap" href="setStatus.php?user_id=<?php echo $user['id']; ?>">Ngừng hoạt động</a>
+                                                <?php else: ?>
+                                                    <!-- Nếu trạng thái là 'inactive', hiển thị nút kích hoạt lại -->
+                                                    <a class="btn btn-success text-nowrap" href="setStatus.php?user_id=<?php echo $user['id']; ?>">Kích hoạt lại</a>
+                                                <?php endif; ?>
                                             </td>
                                         </tr>
                                     <?php } ?>

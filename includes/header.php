@@ -43,15 +43,16 @@ $result = $conn->query($sql);
             <div class="collapse navbar-collapse" id="navbarNav">
                 <!-- Thanh tìm kiếm -->
                 <div class="search-container">
-                    <div class="input-group">
+                    <form class="input-group" action="search.php" method="get">
                         <!-- Thanh tìm kiếm -->
-                        <input type="text" class="form-control" placeholder="Tìm kiếm sản phẩm...">
+                        <input type="text" name="search" value="<?php if (isset($_GET['search'])): echo $_GET['search'];
+                                                                endif; ?>" class="form-control" placeholder="Tìm kiếm sản phẩm..." />
                         <div class="input-group-append">
-                            <span class="input-group-text search-icon">
-                                <i class="fas fa-search"></i> <!-- Icon kính lúp -->
-                            </span>
+                            <button type="submit" class="input-group-text search-icon">
+                                <i class="fas fa-search"></i>
+                            </button>
                         </div>
-                    </div>
+                    </form>
                 </div>
 
                 <ul class="navbar-nav ml-auto">
@@ -77,8 +78,8 @@ $result = $conn->query($sql);
                     <?php } else { ?>
                         <!-- Đăng xuất -->
                         <li class="nav-item">
-                            <a class="nav-link" href="logout.php">
-                                <i class='bx bx-log-out'></i>Đăng xuất
+                            <a class="nav-link" href="my_account.php">
+                              Xin chào  <?php echo $_SESSION['user_name'] ?>
                             </a>
                         </li>
                     <?php } ?>

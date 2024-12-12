@@ -1,6 +1,6 @@
 <?php
 // Kết nối cơ sở dữ liệu
-include('config/db.php');
+include('config/init.php');
 
 // Lấy ID danh mục từ URL
 $category_id = isset($_GET['category_id']) ? $_GET['category_id'] : 0;
@@ -54,6 +54,13 @@ include('includes/header.php');
         <li class="nav-item category-item">
             <a class="nav-link" href="contact.php">Liên Hệ</a>
         </li>
+
+        <?php if (isset($_SESSION['user_id'])) : ?>
+            <!-- Mục tài khoản -->
+            <li class="nav-item category-item">
+                <a class="nav-link" href="my_account.php">Tài khoản</a>
+            </li>
+        <?php endif ?>
     </ul>
 </div>
 <div class="container my-5">

@@ -7,8 +7,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $password = mysqli_real_escape_string($conn, $_POST['password']);
 
-    // Truy vấn kiểm tra email và mật khẩu
-    $sql = "SELECT * FROM user WHERE email = '$email'";
+    // Truy vấn kiểm tra email, mật khẩu và kiểm tra trạng thái tài khoản
+    $sql = "SELECT * FROM user WHERE email = '$email' AND status = 'active'";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
@@ -17,11 +17,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (password_verify($password, $user['password'])) {
             // Lưu thông tin người dùng vào session
             $_SESSION['user_id'] = $user['id'];
-            $_SESSION['user_name'] = $user['name'];
+            $_SESSION['user_name'] = $user['username'];
             $_SESSION['user_email'] = $user['email'];
 
             // Chuyển hướng đến trang chính (hoặc trang nào bạn muốn)
-            header("Location: index.php");
+            if (isset($_SESSION['login_message'])) {
+                header("Location: cart.php");
+                unset($_SESSION['login_message']);
+            } else {
+                header("Location: index.php");
+            }
             exit;
         } else {
             $error = "Mật khẩu không đúng!";
@@ -43,11 +48,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
-    <div class="container mt-5">    
+    <div class="container mt-5">
         <h2 class="text-center">Đăng Nhập</h2>
         <form action="login.php" method="POST">
             <?php if (isset($error)): ?>
                 <div class="alert alert-danger"><?php echo $error; ?></div>
+            <?php endif; ?>
+
+            <?php if (isset($_SESSION['login_message'])): ?>
+                <div class="alert alert-danger"><?php echo $_SESSION['login_message'] ?></div>
             <?php endif; ?>
 
             <div class="form-group">

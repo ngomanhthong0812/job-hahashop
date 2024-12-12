@@ -3,8 +3,8 @@
 include('../config/init.php');
 
 // Lấy dữ liệu từ cơ sở dữ liệu
-$sql = "SELECT * FROM product";
-$product_list = $conn->query($sql);
+$sql = "SELECT * FROM `order`";
+$order_list = $conn->query($sql);
 ?>
 
 <!DOCTYPE html>
@@ -39,11 +39,9 @@ $product_list = $conn->query($sql);
                                 <thead>
                                     <tr>
                                         <th>STT</th>
-                                        <th>Ảnh</th>
-                                        <th>Tên</th>
-                                        <th>Mô tả</th>
-                                        <th>Loại</th>
-                                        <th>Giá</th>
+                                        <th>Tên khách hàng</th>
+                                        <th>Tổng tiền</th>
+                                        <th>Trạng thái</th>
                                         <th>Ngày tạo</th>
                                         <th></th>
                                         <th></th>
@@ -52,11 +50,9 @@ $product_list = $conn->query($sql);
                                 <tfoot>
                                     <tr>
                                         <th>STT</th>
-                                        <th>Ảnh</th>
-                                        <th>Tên</th>
-                                        <th>Mô tả</th>
-                                        <th>Loại</th>
-                                        <th>Giá</th>
+                                        <th>Tên khách hàng</th>
+                                        <th>Tổng tiền</th>
+                                        <th>Trạng thái</th>
                                         <th>Ngày tạo</th>
                                         <th></th>
                                         <th></th>
@@ -64,56 +60,56 @@ $product_list = $conn->query($sql);
                                 </tfoot>
                                 <tbody>
                                     <?php $index = 0; ?>
-                                    <?php foreach ($product_list as $product) { ?>
+                                    <?php foreach ($order_list as $order) { ?>
                                         <tr>
                                             <td>
                                                 <?php echo ++$index; ?>
-                                            </td>
-                                            <td>
-                                                <img src="../../assets/images/products/<?php echo $product['image']; ?>"
-                                                    width="60" height="60">
-                                            </td>
-                                            <td>
-                                                <?php echo $product['name']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $product['description']; ?>
-                                            </td>
                                             <td>
                                                 <?php
-                                                // Lấy category_id từ sản phẩm
-                                                $category_id = $product['category_id'];
-
-                                                // Truy vấn lấy tên category
-                                                $sql = "SELECT name FROM category WHERE id = ?";
-                                                $stmt = $conn->prepare($sql);
-                                                $stmt->bind_param("i", $category_id);
-                                                $stmt->execute();
-                                                $stmt->bind_result($category_name);
-
-                                                // Hiển thị tên category
-                                                if ($stmt->fetch()) {
-                                                    echo $category_name;
-                                                } else {
-                                                    echo "Không tìm thấy tên category";
-                                                }
-
-                                                $stmt->close();
+                                                // Lấy tên khách hàng từ bảng user dựa trên user_id của đơn hàng
+                                                $user_id = $order['user_id'];
+                                                $sql_user = "SELECT full_name FROM user WHERE id = ?";
+                                                $stmt_user = $conn->prepare($sql_user);
+                                                $stmt_user->bind_param("i", $user_id);
+                                                $stmt_user->execute();
+                                                $result_user = $stmt_user->get_result();
+                                                $user = $result_user->fetch_assoc();
+                                                echo isset($user['full_name']) ? $user['full_name'] : 'Không tìm thấy';
                                                 ?>
                                             </td>
                                             <td>
-                                                <?php echo $product['price']; ?>
+                                                <?php echo $order['total']; ?>
                                             </td>
                                             <td>
-                                                <?php echo $product['created_at']; ?>
+                                                <?php
+                                                // Lấy trạng thái đơn hàng
+                                                $status = $order['status'];
+
+                                                // Xác định màu sắc dựa trên trạng thái
+                                                if ($status == 'pending') {
+                                                    $color = 'warning'; // Màu vàng cho trạng thái "pending"
+                                                } elseif ($status == 'completed') {
+                                                    $color = 'success'; // Màu xanh cho trạng thái "completed"
+                                                } elseif ($status == 'cancelled') {
+                                                    $color = 'danger'; // Màu đỏ cho trạng thái "cancelled"
+                                                } else {
+                                                    $color = 'secondary'; // Màu mặc định nếu không có trạng thái hợp lệ
+                                                }
+                                                ?>
+                                                <span class="text-<?php echo $color; ?>">
+                                                    <?php echo ucfirst($status); ?> <!-- hiển thị trạng thái đầu tiên in hoa -->
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <?php echo $order['created_at']; ?>
                                             </td>
                                             <td>
                                                 <a class="btn btn-primary text-nowrap"
-                                                    href="edit.php?product_id=<?php echo $product['id']; ?>">Cập nhật</a>
+                                                    href="order_details.php?order_id=<?php echo $order['id']; ?>&status=<?php echo $order['status'] ?>">Chi tiết</a>
                                             </td>
                                             <td>
                                                 <a class="btn btn-danger text-nowrap"
-                                                    href="delete.php?product_id=<?php echo $product['id']; ?>">Xoá</a>
+                                                    href="delete.php?order_id=<?php echo $order['id']; ?>">Xoá</a>
                                             </td>
                                         </tr>
                                     <?php } ?>

@@ -39,9 +39,9 @@ $category_list = $conn->query($sql);
                                 <thead>
                                     <tr>
                                         <th>STT</th>
-                                        <th>Created At</th>
-                                        <th>Name</th>
-                                        <th>Description</th>
+                                        <th>Ngày tạo</th>
+                                        <th>Tên</th>
+                                        <th>Mô tả</th>
                                         <th></th>
                                         <th></th>
                                     </tr>
@@ -49,9 +49,9 @@ $category_list = $conn->query($sql);
                                 <tfoot>
                                     <tr>
                                         <th>STT</th>
-                                        <th>Created At</th>
-                                        <th>Name</th>
-                                        <th>Description</th>
+                                        <th>Ngày tạo</th>
+                                        <th>Tên</th>
+                                        <th>Mô tả</th>
                                         <th></th>
                                         <th></th>
                                     </tr>
@@ -73,12 +73,12 @@ $category_list = $conn->query($sql);
                                                 <?php echo $category['description']; ?>
                                             </td>
                                             <td>
-                                                <a class="btn btn-primary"
-                                                    href="edit.php?category_id=<?php echo $category['id']; ?>">Edit</a>
+                                                <a class="btn btn-primary text-nowrap"
+                                                    href="edit.php?category_id=<?php echo $category['id']; ?>">Cập nhật</a>
                                             </td>
                                             <td>
-                                                <a class="btn btn-danger"
-                                                    href="delete.php?category_id=<?php echo $category['id']; ?>">Delete</a>
+                                                <a class="btn btn-danger text-nowrap"
+                                                    href="delete.php?category_id=<?php echo $category['id']; ?>">Xoá</a>
                                             </td>
                                         </tr>
                                     <?php } ?>

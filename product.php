@@ -91,6 +91,12 @@ if (isset($_POST['add_to_cart'])) {
         <li class="nav-item category-item">
             <a class="nav-link" href="contact.php">Liên Hệ</a>
         </li>
+        <?php if (isset($_SESSION['user_id'])) : ?>
+            <!-- Mục tài khoản -->
+            <li class="nav-item category-item">
+                <a class="nav-link" href="my_account.php">Tài khoản</a>
+            </li>
+        <?php endif ?>
     </ul>
 </div>
 <div class="container my-5">
