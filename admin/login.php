@@ -1,6 +1,9 @@
 <?php
 // Kết nối cơ sở dữ liệu
-include('config/init.php');
+include('../config/db.php');
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Xử lý khi form đăng nhập được gửi
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -8,25 +11,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = mysqli_real_escape_string($conn, $_POST['password']);
 
     // Truy vấn kiểm tra email, mật khẩu và kiểm tra trạng thái tài khoản
-    $sql = "SELECT * FROM user WHERE email = '$email' AND status = 'active'";
+    $sql = "SELECT * FROM `admin` WHERE email = '$email'";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-        $user = $result->fetch_assoc();
+        $admin = $result->fetch_assoc();
         // Kiểm tra mật khẩu
-        if (password_verify($password, $user['password'])) {
+        if ($password === $admin['password']) {
             // Lưu thông tin người dùng vào session
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['user_name'] = $user['username'];
-            $_SESSION['user_email'] = $user['email'];
+            $_SESSION['admin_id'] = $admin['id'];
+            $_SESSION['admin_name'] = $admin['username'];
+            $_SESSION['admin_email'] = $admin['email'];
 
-            // Chuyển hướng đến trang chính (hoặc trang nào bạn muốn)
-            if (isset($_SESSION['login_message'])) {
-                header("Location: cart.php");
-                unset($_SESSION['login_message']);
-            } else {
-                header("Location: index.php");
-            }
+            header("Location: index.php");
             exit;
         } else {
             $error = "Mật khẩu không đúng!";
@@ -49,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
     <div class="container mt-5">
-        <h2 class="text-center">Đăng Nhập</h2>
+        <h2 class="text-center">Đăng Nhập Admin</h2>
         <form action="login.php" method="POST">
             <?php if (isset($error)): ?>
                 <div class="alert alert-danger"><?php echo $error; ?></div>
@@ -57,10 +54,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <?php if (isset($_SESSION['login_message'])): ?>
                 <div class="alert alert-danger"><?php echo $_SESSION['login_message'] ?></div>
-            <?php endif; ?>
-
-            <?php if (isset($_SESSION['comment_message'])): ?>
-                <div class="alert alert-danger"><?php echo $_SESSION['comment_message'] ?></div>
             <?php endif; ?>
 
             <div class="form-group">
@@ -75,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <button type="submit" class="btn btn-primary btn-block">Đăng Nhập</button>
         </form>
-        <p class="text-center mt-3">Chưa có tài khoản? <a href="register.php">Đăng ký</a></p>
+        <p class="text-center mt-3">Tài khoản admin không thể đăng kí. Vui lòng liên hệ...</p>
     </div>
 </body>
 

@@ -17,3 +17,15 @@ if (!file_exists($dbConfigPath)) {
 
 // Bao gồm file cấu hình database
 include($dbConfigPath);
+
+
+//kiểm tra người dùng đã đăng nhập hay chk
+if (!isset($_SESSION['admin_id'])) {
+    $message = "Vui lòng đăng nhập để tiếp tục.";
+    header("Location: ./login.php");
+    // Gửi thông báo qua POST
+    $_SESSION['login_message'] = $message; // Sử dụng session để truyền thông báo an toàn hơn
+    exit;
+} else {
+    unset($_SESSION['login_message']);
+}

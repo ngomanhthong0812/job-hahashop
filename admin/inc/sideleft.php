@@ -65,7 +65,7 @@
         </div>
         <div class="sb-sidenav-footer">
             <div class="small">Admin:</div>
-            <!-- <?php echo $_SESSION['email'] ?> -->
+            <?php echo $_SESSION['admin_email'] ?>
         </div>
     </nav>
 </div>

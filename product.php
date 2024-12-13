@@ -66,6 +66,12 @@ if (isset($_POST['add_to_cart'])) {
 }
 ?>
 
+<?php
+// Lấy dữ liệu từ cơ sở dữ liệu
+$sql = "SELECT * FROM feedback WHERE product_id = $product_id ORDER BY created_at DESC";
+$feedback_list = $conn->query($sql);
+?>
+
 <?php include('includes/header.php'); ?>
 
 <!-- Danh mục sản phẩm -->
@@ -149,6 +155,66 @@ if (isset($_POST['add_to_cart'])) {
                 </div>
             </form>
         </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <h3>Đánh giá</h3>
+    <hr>
+
+    <!-- Form Thêm Bình Luận -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Để lại bình luận</h5>
+            <form method="POST" action="submit_comment.php">
+                <input type="text" class="form-control" id="product_id" name="product_id" value="<?php echo $product_id ?>" hidden>
+                <div class="form-group">
+                    <label for="comment_rating">Số sao:</label>
+                    <input type="number" min='0' max='5' class="form-control" id="comment_rating" name="rating" placeholder="Nhập số sao" required>
+                </div>
+                <div class="form-group">
+                    <label for="comment_comment">Bình luận:</label>
+                    <textarea class="form-control" id="comment_comment" name="comment" rows="4" placeholder="Viết bình luận của bạn ở đây" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Gửi bình luận</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Hiển thị danh sách bình luận -->
+    <div class="comments-list">
+        <?php foreach ($feedback_list as $index => $item): ?>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <?php
+                    // Lấy user_id từ feedback
+                    $user_id = $item['user_id'];
+                    if (isset($_SESSION['user_id']) && $user_id === $_SESSION['user_id']) {
+                        echo '<h5 class="card-title">Tôi</h5>';
+                    } else {
+                        // Truy vấn lấy tên sản phẩm và ảnh của sản phẩm
+                        $sql = "SELECT full_name FROM user WHERE id = ?";
+                        $stmt = $conn->prepare($sql);
+                        $stmt->bind_param("i", $user_id);
+                        $stmt->execute();
+                        $stmt->bind_result($user_name);
+
+                        // Hiển thị tên sản phẩm và ảnh
+                        if ($stmt->fetch()) {
+                            echo '<h5 class="card-title">' . $user_name . '</h5>';
+                        } else {
+                            echo '<h5 class="card-title">Guest</h5>';
+                        }
+
+                        $stmt->close();
+                    }
+                    ?>
+                    <p class="card-text">Đánh giá <?php echo $item['rating'] ?> sao</p>
+                    <p class="card-text">Bình luận: <?php echo $item['comment'] ?></p>
+                    <small><?php echo $item['created_at'] ?></small>
+                </div>
+            </div>
+        <?php endforeach ?>
     </div>
 </div>
 
